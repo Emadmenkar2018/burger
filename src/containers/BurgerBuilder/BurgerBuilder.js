@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import Burger from '../../components/Burger/Burger'
 
 class BurgerBuilder extends Component {
 
@@ -6,7 +7,7 @@ class BurgerBuilder extends Component {
     render() {
         return (
             <Fragment>
-                <div>Burger</div>
+                <Burger/>
                 <div>Build Controls</div>
             </Fragment>
         )
