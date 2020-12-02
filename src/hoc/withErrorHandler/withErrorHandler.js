@@ -13,14 +13,13 @@ const withErrorHandler = (WrappedComponent, axios) => {
             setError(error);
         })
 
-        useEffect(
-            () => {
-                return () => {
-                    axios.interceptors.request.eject(reqInterceptor);
-                    axios.interceptors.response.eject(resInterceptor);
-                };
-            }
-        ,[reqInterceptor, resInterceptor]);
+        useEffect(() => {
+            return () => {
+                // console.log('will unmount', reqInterceptor, resInterceptor);
+                axios.interceptors.request.eject(reqInterceptor);
+                axios.interceptors.response.eject(resInterceptor);
+            };
+        },[reqInterceptor, resInterceptor]);
 
         const errorConfirmedHandler = () => {
             setError(null);
