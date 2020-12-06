@@ -5,6 +5,8 @@ import Button from '../../../components/UI/Button/Button';
 import axios from '../../../axios-orders'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import Input from '../../../components/UI/Input/Input'
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
+import * as actions from '../../../store/actions'
 
 class ContactData extends Component {
     state = {
@@ -95,8 +97,7 @@ class ContactData extends Component {
 
     orderHandler = (e) => {
         e.preventDefault();
-        this.setState({loading: true});
-        const {ings, price, history} = this.props;
+        const {ings, price, history, onOrderBurger} = this.props;
         const {orderForm} = this.state;
         const formData = {};
         for(let formElement in orderForm){
@@ -108,21 +109,7 @@ class ContactData extends Component {
             orderData: formData
         }
         
-        // .json just for firbase configuration
-        axios.post('/orders.json', order)
-            .then(res => {
-                // console.log(res);
-                this.setState({
-                    loading: false
-                });
-                history.push('/');
-            })
-            .catch(err => {
-                // console.log(err.response);
-                this.setState({
-                    loading: false
-                });
-            })
+        onOrderBurger(order);
     }
 
     checkValidity = (value, rules) => {
@@ -212,4 +199,8 @@ const mapStateToProps = state => ({
     price: state.totalPrice
 })
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => ({
+    onOrderBurger: (orderDate) => dispatch(actions.purchaseBurgerStart(orderDate))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
