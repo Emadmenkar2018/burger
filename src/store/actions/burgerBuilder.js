@@ -22,6 +22,7 @@ export const fetchIngredientsFailed = () => ({
 
 export const initIngredients = () => {
     return dispatch => {
+        // .json just for firbase configuration
         axios.get('/ingredients.json')
             .then(res => {
                 // console.log(res);
