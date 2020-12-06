@@ -96,7 +96,7 @@ class ContactData extends Component {
 
     orderHandler = (e) => {
         e.preventDefault();
-        const {ings, price, history, onOrderBurger} = this.props;
+        const {ings, price, onOrderBurger} = this.props;
         const {orderForm} = this.state;
         const formData = {};
         for(let formElement in orderForm){
