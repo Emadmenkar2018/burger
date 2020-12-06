@@ -1,4 +1,5 @@
 import {ADD_INGREDIENTS, REMOVE_INGREDIENTS, SET_INGREDIENTS, FETCH_INGREDIENTS_FAILED} from '../actions/actionTypes'
+import {updateObject} from '../utility'
 
 const initialState = {
     ingredients: null,
@@ -16,27 +17,24 @@ const INGREDIENT_PRICES = {
 export default (state = initialState, action) => {
     switch(action.type){
         case ADD_INGREDIENTS:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-                },
+            const updatedIngredient = {[action.ingredientName]: state.ingredients[action.ingredientName] + 1}
+            const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
+            const updatedState = {
+                ingredients: updatedIngredients,
                 totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
             }
+            return updateObject(state, updatedState);
         case REMOVE_INGREDIENTS:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                },
-                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+            const updatedIng = {[action.ingredientName]: state.ingredients[action.ingredientName] - 1}
+            const updatedIngs = updateObject(state.ingredients, updatedIng);
+            const updatedSt = {
+                ingredients: updatedIngs,
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
             }
+            return updateObject(state, updatedSt);
         case SET_INGREDIENTS:
             const {salad, bacon, cheese, meat} = action.ingredients;
-            return {
-                ...state,
+            return updateObject(state, {
                 ingredients: {
                     salad,
                     bacon,
@@ -45,12 +43,11 @@ export default (state = initialState, action) => {
                 },
                 totalPrice: 4,
                 error: false
-            }
+            });
         case FETCH_INGREDIENTS_FAILED:
-            return {
-                ...state,
+            return updateObject(state, {
                 error: true
-            }
+            });
         default:
             return state;
     }
