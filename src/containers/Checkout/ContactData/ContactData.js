@@ -91,8 +91,7 @@ class ContactData extends Component {
                 valid: true
             }
         },
-        formIsValid: false,
-        loading: false
+        formIsValid: false
     }
 
     orderHandler = (e) => {
@@ -157,7 +156,8 @@ class ContactData extends Component {
     }
 
     render() {
-        const {loading, orderForm, formIsValid} = this.state;
+        const {orderForm, formIsValid} = this.state;
+        const {loading} = this.props;
         const formElementsArray = [];
         for(let key in orderForm){
             formElementsArray.push({
@@ -196,11 +196,12 @@ class ContactData extends Component {
 
 const mapStateToProps = state => ({
     ings: state.ingredients,
-    price: state.totalPrice
+    price: state.totalPrice,
+    loading: state.loading
 })
 
 const mapDispatchToProps = dispatch => ({
-    onOrderBurger: (orderDate) => dispatch(actions.purchaseBurgerStart(orderDate))
+    onOrderBurger: (orderDate) => dispatch(actions.purchaseBurger(orderDate))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
