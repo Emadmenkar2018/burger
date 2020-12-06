@@ -34,9 +34,15 @@ export default (state = initialState, action) => {
                 totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
             }
         case SET_INGREDIENTS:
+            const {salad, bacon, cheese, meat} = action.ingredients;
             return {
                 ...state,
-                ingredients: action.ingredients,
+                ingredients: {
+                    salad,
+                    bacon,
+                    cheese,
+                    meat
+                },
                 error: false
             }
         case FETCH_INGREDIENTS_FAILED:
