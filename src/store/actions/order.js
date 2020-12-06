@@ -1,4 +1,9 @@
-import {PURCHASE_BURGER_SUCCESS, PURCHASE_BURGER_FAIL, PURCHASE_BURGER_START} from './actionTypes'
+import {
+    PURCHASE_BURGER_SUCCESS, 
+    PURCHASE_BURGER_FAIL, 
+    PURCHASE_BURGER_START, 
+    PURCHASE_INIT
+} from './actionTypes'
 import axios from '../../axios-orders'
 
 export const purchaseBurgerSuccess = (id, orderData) => ({
@@ -14,6 +19,10 @@ export const purchaseBurgerFail = (error) => ({
 
 export const purchaseBurgerStart = () => ({
     type: PURCHASE_BURGER_START
+})
+
+export const purchaseInit = () => ({
+    type: PURCHASE_INIT
 })
 
 export const purchaseBurger = (orderData) => {
