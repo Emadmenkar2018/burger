@@ -43,6 +43,7 @@ export default (state = initialState, action) => {
                     cheese,
                     meat
                 },
+                totalPrice: 4,
                 error: false
             }
         case FETCH_INGREDIENTS_FAILED:
