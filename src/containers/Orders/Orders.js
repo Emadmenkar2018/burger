@@ -8,8 +8,8 @@ import * as actions from '../../store/actions'
 
 class Orders extends Component {
     componentDidMount(){
-        const {token, onFetchOrders} = this.props;
-        onFetchOrders(token);
+        const {token, userId, onFetchOrders} = this.props;
+        onFetchOrders(token, userId);
     }
 
     render() {
@@ -35,11 +35,12 @@ class Orders extends Component {
 const mapStateToProps = state => ({
     orders: state.order.orders,
     loading: state.order.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
 })
 
 const mapDispatchToProps = dispatch => ({
-    onFetchOrders: (token) => dispatch(actions.fetchOrders(token))
+    onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
