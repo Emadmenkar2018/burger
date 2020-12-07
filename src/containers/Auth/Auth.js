@@ -37,7 +37,8 @@ class Auth extends Component {
                 touched: false
             }
         },
-        formIsValid: false
+        formIsValid: false,
+        isSignup: true
     }
 
     checkValidity = (value, rules) => {
@@ -92,13 +93,20 @@ class Auth extends Component {
 
     submitHandler = e => {
         e.preventDefault();
+        const {isSignup} = this.state;
         const {email, password} = this.state.controls;
         const {onAuth} = this.props;
-        onAuth(email.value, password.value);
+        onAuth(email.value, password.value, isSignup);
+    }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => ({
+            isSignup: !prevState.isSignup
+        }))
     }
 
     render() {
-        const {controls} = this.state;
+        const {controls, isSignup} = this.state;
         const formElementsArray = [];
         for(let key in controls){
             formElementsArray.push({
@@ -122,17 +130,20 @@ class Auth extends Component {
             <div className={classes.Auth}>
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType='Success' >
+                    <Button btnType='Success'>
                         SUBMIT
                     </Button>
                 </form>
+                <Button btnType='Danger' clicked={this.switchAuthModeHandler}>
+                    SWITCH TO {isSignup ? 'SIGNIN' : 'SIGNUP'}
+                </Button>
             </div>
         );
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    onAuth: (email, password) => dispatch(actions.auth(email, password))
+    onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
 })
 
 export default connect(null, mapDispatchToProps)(Auth);
