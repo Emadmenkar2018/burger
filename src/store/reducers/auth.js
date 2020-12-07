@@ -1,4 +1,4 @@
-import {AUTH_START, AUTH_SUCCESS, AUTH_FAIL} from '../actions/actionTypes'
+import {AUTH_START, AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT} from '../actions/actionTypes'
 import {updateObject} from '../utility'
 
 const initialState = {
@@ -31,6 +31,13 @@ const authFail = (state, action) => (
     })
 )
 
+const authLogout = state => (
+    updateObject(state, {
+        token: null,
+        userId: null
+    })
+)
+
 export default (state = initialState, action) => {
     switch(action.type){
         case AUTH_START:
@@ -39,6 +46,8 @@ export default (state = initialState, action) => {
             return authSuccess(state, action);
         case AUTH_FAIL:
             return authFail(state, action);
+        case AUTH_LOGOUT:
+            return authLogout(state);
         default:
             return state;
     }
