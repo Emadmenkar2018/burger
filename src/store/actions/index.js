@@ -10,6 +10,7 @@ export {
 } from './order'
 export {
     auth, 
-    logout,
-    setAuthRedirectPath
+    logout, 
+    setAuthRedirectPath, 
+    authCheckState
 } from './auth'
