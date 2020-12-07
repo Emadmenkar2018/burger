@@ -1,4 +1,8 @@
-import {AUTH_START, AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT} from './actionTypes'
+import {
+    AUTH_START, AUTH_SUCCESS, 
+    AUTH_FAIL, AUTH_LOGOUT, 
+    SET_AUTH_REDIRECT_PATH
+} from './actionTypes'
 import axios from 'axios'
 
 export const authStart = () => ({
@@ -52,3 +56,8 @@ export const auth = (email, password, isSignup) => {
             })
     }
 }
+
+export const setAuthRedirectPath = path => ({
+    type: SET_AUTH_REDIRECT_PATH,
+    path
+})
