@@ -1,5 +1,5 @@
 import {ADD_INGREDIENTS, REMOVE_INGREDIENTS, SET_INGREDIENTS, FETCH_INGREDIENTS_FAILED} from '../actions/actionTypes'
-import {updateObject} from '../utility'
+import {updateObject} from '../../shared/utility'
 
 const initialState = {
     ingredients: null,
