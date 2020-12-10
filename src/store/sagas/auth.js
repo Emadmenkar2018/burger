@@ -29,7 +29,7 @@ export function* authUserSaga(action) {
 
     try{
         const res = yield axios.post(url, authData);
-        
+
         const expirationDate = yield new Date(new Date().getTime() + res.data.expiresIn * 1000);
         yield localStorage.setItem('token', res.data.idToken);
         yield localStorage.setItem('expirationDate', expirationDate);
@@ -39,4 +39,16 @@ export function* authUserSaga(action) {
     }catch(err){
         yield put(actions.authFail(err.response.data.error));
     }
+}
+
+export function* authCheckStateSaga(action) {
+    const token = yield localStorage.getItem('token');
+    if(!token) return yield put(actions.logout());
+
+    const expirationDate = yield new Date(localStorage.getItem('expirationDate'));
+    if(expirationDate < new Date()) return yield put(actions.logout());
+
+    const userId = yield localStorage.getItem('userId');
+    yield put(actions.authSuccess(token, userId));
+    yield put(actions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
 }
