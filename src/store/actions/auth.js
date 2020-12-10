@@ -1,4 +1,5 @@
 import {
+    AUTH_USER, 
     AUTH_START, 
     AUTH_SUCCESS, 
     AUTH_FAIL, 
@@ -7,7 +8,6 @@ import {
     AUTH_LOGOUT, 
     SET_AUTH_REDIRECT_PATH
 } from './actionTypes'
-import axios from 'axios'
 
 export const authStart = () => ({
     type: AUTH_START
@@ -37,34 +37,12 @@ export const checkAuthTimeout = expirationTime => ({
     expirationTime
 })
 
-export const auth = (email, password, isSignup) => {
-    return dispatch => {
-        dispatch(authStart());
-        const authData = {
-            email,
-            password,
-            returnSecureToken: true
-        }
-        let url = isSignup ? 
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDSbOdiC4GVm1LLmkw6G2_VqnJRtTk49Jo' : 
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDSbOdiC4GVm1LLmkw6G2_VqnJRtTk49Jo';
-
-        axios.post(url, authData)
-            .then(res => {
-                // console.log(res);
-                const expirationDate = new Date(new Date().getTime() + res.data.expiresIn * 1000);
-                localStorage.setItem('token', res.data.idToken);
-                localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('userId', res.data.localId);
-                dispatch(authSuccess(res.data.idToken, res.data.localId));
-                dispatch(checkAuthTimeout(res.data.expiresIn));
-            })
-            .catch(err => {
-                // console.log(err.response);
-                dispatch(authFail(err.response.data.error));
-            })
-    }
-}
+export const auth = (email, password, isSignup) => ({
+    type: AUTH_USER,
+    email,
+    password,
+    isSignup
+})
 
 export const setAuthRedirectPath = path => ({
     type: SET_AUTH_REDIRECT_PATH,
