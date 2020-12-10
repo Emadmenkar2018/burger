@@ -13,3 +13,20 @@ export function* purchaseBurgerSaga(action) {
     }
 }
 
+export function* fetchOrdersSaga(action) {
+    yield put(actions.fetchOrdersStart());
+    
+    try {
+        const res = yield axios.get(`/orders.json?auth=${action.token}&orderBy="userId"&equalTo="${action.userId}"`);
+        const fetchedOrders = [];
+        for(let key in res.data){
+            fetchedOrders.push({
+                ...res.data[key],
+                id: key
+            })
+        }
+        yield put(actions.fetchOrdersSuccess(fetchedOrders));
+    }catch(err) {
+        yield put(actions.fetchOrdersFail(err));
+    }
+}
