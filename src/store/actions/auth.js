@@ -1,6 +1,8 @@
 import {
-    AUTH_START, AUTH_SUCCESS, 
-    AUTH_FAIL, AUTH_LOGOUT, 
+    AUTH_START, 
+    AUTH_SUCCESS, 
+    AUTH_FAIL, 
+    AUTH_INITIATE_LOGOUT, 
     SET_AUTH_REDIRECT_PATH
 } from './actionTypes'
 import axios from 'axios'
@@ -21,11 +23,11 @@ export const authFail = error => ({
 })
 
 export const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
-    localStorage.removeItem('userId');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('expirationDate');
+    // localStorage.removeItem('userId');
     return {
-        type: AUTH_LOGOUT
+        type: AUTH_INITIATE_LOGOUT
     }
 }
 
