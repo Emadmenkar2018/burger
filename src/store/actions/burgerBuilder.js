@@ -1,5 +1,9 @@
-import {ADD_INGREDIENTS, REMOVE_INGREDIENTS, SET_INGREDIENTS, FETCH_INGREDIENTS_FAILED} from './actionTypes'
-import axios from '../../axios-orders'
+import {
+    ADD_INGREDIENTS, 
+    REMOVE_INGREDIENTS, 
+    SET_INGREDIENTS, 
+    INIT_INGREDIENTS, 
+    FETCH_INGREDIENTS_FAILED} from './actionTypes'
 
 export const addIngredient = (name) => ({
     type: ADD_INGREDIENTS,
@@ -20,16 +24,6 @@ export const fetchIngredientsFailed = () => ({
     type: FETCH_INGREDIENTS_FAILED
 })
 
-export const initIngredients = () => {
-    return dispatch => {
-        // .json just for firbase configuration
-        axios.get('/ingredients.json')
-            .then(res => {
-                // console.log(res);
-                dispatch(setIngredients(res.data));
-            })
-            .catch(err => {
-                dispatch(fetchIngredientsFailed());
-            })
-    }
-}
+export const initIngredients = () => ({
+    type: INIT_INGREDIENTS
+})
