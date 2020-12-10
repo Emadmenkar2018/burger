@@ -6,7 +6,8 @@ import {
     AUTH_CHECK_TIMEOUT, 
     AUTH_INITIATE_LOGOUT, 
     AUTH_LOGOUT, 
-    SET_AUTH_REDIRECT_PATH
+    SET_AUTH_REDIRECT_PATH, 
+    AUTH_CHECK_STATE
 } from './actionTypes'
 
 export const authStart = () => ({
@@ -49,16 +50,7 @@ export const setAuthRedirectPath = path => ({
     path
 })
 
-export const authCheckState = () => {
-    return dispatch => {
-        const token = localStorage.getItem('token');
-        if(!token) return dispatch(logout());
+export const authCheckState = () => ({
+    type: AUTH_CHECK_STATE
+})
 
-        const expirationDate = new Date(localStorage.getItem('expirationDate'));
-        if(expirationDate < new Date()) return dispatch(logout());
-
-        const userId = localStorage.getItem('userId');
-        dispatch(authSuccess(token, userId));
-        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
-    }
-}
