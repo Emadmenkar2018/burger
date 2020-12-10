@@ -1,4 +1,5 @@
 import {
+    PURCHASE_BURGER, 
     PURCHASE_BURGER_SUCCESS, 
     PURCHASE_BURGER_FAIL, 
     PURCHASE_BURGER_START, 
@@ -28,20 +29,11 @@ export const purchaseInit = () => ({
     type: PURCHASE_INIT
 })
 
-export const purchaseBurger = (orderData, token) => {
-    return dispatch => {
-        dispatch(purchaseBurgerStart());
-        axios.post(`/orders.json?auth=${token}`, orderData)
-            .then(res => {
-                // console.log(res);
-                dispatch(purchaseBurgerSuccess(res.data.name, orderData));
-            })
-            .catch(err => {
-                // console.log(err.response);
-                dispatch(purchaseBurgerFail(err));
-            })
-    }
-}
+export const purchaseBurger = (orderData, token) => ({
+    type: PURCHASE_BURGER,
+    token,
+    orderData
+})
 
 export const fetchOrdersSuccess = orders => ({
     type: FETCH_ORDERS_SUCCESS,
