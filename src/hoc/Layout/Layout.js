@@ -1,43 +1,35 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import classes from './Layout.module.css'
+import { connect } from 'react-redux'
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
-import { connect } from 'react-redux'
 
-class Layout extends Component {
-    state = {
-        showSideDrawer: false
+const Layout = ({isAuthenticated, ...props}) => {
+    const [showSideDrawer, setShowSideDrawer] = useState(false);
+
+    const sideDrawerClosedHandler = () => {
+        setShowSideDrawer(false);
     }
 
-    sideDrawerClosedHandler = () => {
-        this.setState({
-            showSideDrawer: false
-        })
-    }
-
-    sideDrawerToggleHandler = () => {
-        this.setState((prevState) => ({
+    const sideDrawerToggleHandler = () => {
+        setShowSideDrawer((prevState) => ({
             showSideDrawer: !prevState.showSideDrawer
         }))
     }
 
-    render(){
-        const {showSideDrawer} = this.state;
-        const {isAuthenticated} = this.props;
-        return (
-            <Fragment>
-                <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} isAuth={isAuthenticated}/>
-                <SideDrawer 
-                    open={showSideDrawer} 
-                    closed={this.sideDrawerClosedHandler}
-                    isAuth={isAuthenticated}
-                />
-                <main className={classes.Content}>
-                    {this.props.children}
-                </main>
-            </Fragment>
-        )
-    }
+    return (
+        <Fragment>
+            <Toolbar drawerToggleClicked={sideDrawerToggleHandler} isAuth={isAuthenticated}/>
+            <SideDrawer 
+                open={showSideDrawer} 
+                closed={sideDrawerClosedHandler}
+                isAuth={isAuthenticated}
+            />
+            <main className={classes.Content}>
+                {props.children}
+            </main>
+        </Fragment>
+    )
 }
 
 const mapStateToProps = state => ({
