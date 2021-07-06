@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import classes from './Layout.module.css'
+import './Layout.css'
 import { connect } from 'react-redux'
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer'
@@ -18,17 +18,17 @@ const Layout = ({isAuthenticated, ...props}) => {
     }
 
     return (
-        <Fragment>
+        <>
             <Toolbar drawerToggleClicked={sideDrawerToggleHandler} isAuth={isAuthenticated}/>
             <SideDrawer 
                 open={showSideDrawer} 
                 closed={sideDrawerClosedHandler}
                 isAuth={isAuthenticated}
             />
-            <main className={classes.Content}>
+            <div className="Content">
                 {props.children}
-            </main>
-        </Fragment>
+            </div>
+        </>
     )
 }
 

@@ -96,13 +96,13 @@ export const BurgerBuilder = ({history}) => {
 
     return (
         <Fragment>
-            <Modal
+            {/* <Modal
                 show={purchasing}
                 modalClosed={purchaseCancelHandler}
             >
                 {orderSummary}
             </Modal>
-            {burger}
+            {burger} */}
         </Fragment>
     )
 }
